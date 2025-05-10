@@ -16,6 +16,8 @@
       --shadow: 0 4px 16px rgba(0,0,0,0.1);
       --speed: .3s;
       --max-width: 1200px;
+      --pharma-color: #006400; /* Vert foncé */
+      --go-color: #1d00ab;    /* Bleu froid */
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -23,7 +25,7 @@
       color: var(--text);
       line-height: 1.5;
       /* Arrière-plan animé vert/blanc */
-      background: linear-gradient(45deg, #a8e063, #ffffff, #a8e063, #ffffff);
+      background: linear-gradient(45deg, #13a103, #ffffff, #13a103, #ffffff);
       background-size: 400% 400%;
       animation: greenWhiteBG 10s ease infinite;
     }
@@ -43,7 +45,12 @@
       top: 0;
       z-index: 100;
     }
-    header h1 { font-size: 1.75rem; color: var(--primary); }
+    header h1 {
+      font-size: 1.75rem;
+    }
+    /* Coloration spécifique de PharmaGO */
+    header h1 .pharma { color: var(--pharma-color); }
+    header h1 .go { color: var(--go-color); }
     nav a { margin-left: var(--spacing); padding: .5rem 1rem; border-radius: var(--radius); border: 1px solid var(--primary); color: var(--primary); text-decoration: none; transition: background var(--speed), color var(--speed); font-size: 0.9rem; }
     nav a:hover { background: var(--primary); color: #fff; }
     .hero {
@@ -101,7 +108,7 @@
 </head>
 <body>
   <header>
-    <h1>PharmaGO</h1>
+    <h1><span class="pharma">Pharma</span><span class="go">GO</span></h1>
     <nav>
       <a href="#" id="link-login">Se connecter</a>
       <a href="#" id="link-register">Créer un compte</a>
