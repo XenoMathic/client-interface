@@ -4,115 +4,228 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PharmaGO - Votre assistant pharmacie</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #0069d9;
       --accent: #ff6f61;
-      --card: #fff;
-      --border: #d1e3f0;
+      --card-bg: #ffffff;
+      --bg-light: #f4f7fa;
       --text: #1f2d3d;
-      --radius: 12px;
+      --radius: 8px;
       --spacing: 1rem;
-      --shadow: 0 4px 16px rgba(0,0,0,0.1);
-      --speed: .3s;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       --max-width: 1200px;
-      --pharma-color: #006400; /* Vert foncé */
-      --go-color: #1d00ab;    /* Bleu froid */
+      --font-base: 'Inter', sans-serif;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *, *::before, *::after { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      font-family: var(--font-base);
       color: var(--text);
-      line-height: 1.5;
-      /* Arrière-plan animé vert/blanc */
-      background: linear-gradient(45deg, #13a103, #ffffff, #13a103, #ffffff);
-      background-size: 400% 400%;
-      animation: greenWhiteBG 10s ease infinite;
+      background-color: var(--bg-light);
+      line-height: 1.6;
     }
-    @keyframes greenWhiteBG {
-      0%   { background-position: 0%   50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0%   50%; }
-    }
+
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--spacing) 2rem;
-      background: var(--card);
+      background-color: var(--card-bg);
       box-shadow: var(--shadow);
       position: sticky;
       top: 0;
       z-index: 100;
     }
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+    }
     header h1 {
       font-size: 1.75rem;
+      font-weight: 700;
     }
-    /* Coloration spécifique de PharmaGO */
-    header h1 .pharma { color: var(--pharma-color); }
-    header h1 .go { color: var(--go-color); }
-    nav a { margin-left: var(--spacing); padding: .5rem 1rem; border-radius: var(--radius); border: 1px solid var(--primary); color: var(--primary); text-decoration: none; transition: background var(--speed), color var(--speed); font-size: 0.9rem; }
-    nav a:hover { background: var(--primary); color: #fff; }
+    header h1 .pharma { color: #006400; }
+    header h1 .go { color: #1d00ab; }
+    nav a {
+      margin-left: var(--spacing);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover { background-color: var(--primary); color: #fff; }
+
+    /* Masquer auth et app initialement */
+    #auth, #app { display: none; }
+
     .hero {
+      position: relative;
+      background: url('https://st2.depositphotos.com/1003098/8163/i/450/depositphotos_81637954-stock-photo-pharmacy-interior.jpg') center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+      padding: 6rem 1rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+      position: relative;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .hero-content h2 {
+      font-size: 2.75rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .hero-content p {
+      font-size: 1.125rem;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    section { padding: 3rem 1rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+
+    .form-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .form-card h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .form-card input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: var(--spacing);
+      border: 1px solid #d1e3f0;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+    .form-card input:focus { border-color: var(--primary); outline: none; }
+    .form-card button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .form-card button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: var(--spacing); }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.75rem;
+      background-color: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .tab.active, .tab:hover { background-color: var(--accent); }
+    .content-section { display: none; }
+    .content-section.active { display: block; }
+
+    .card {
+      background: var(--card-bg);
+      padding: var(--spacing);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: var(--spacing);
+    }
+    .card h4 { margin-bottom: 0.5rem; font-weight: 600; }
+    .card ul { list-style: inside disc; }
+
+    .action, .paste-btn {
+      display: inline-block;
+      margin-top: var(--spacing);
+      padding: 0.6rem 1.2rem;
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .action:hover, .paste-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+    #mapEmbed {
+      width: 100%;
+      height: 50vh;
+      max-height: 400px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background-color: #eaeaea;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 5rem 2rem;
-      background: url('https://st2.depositphotos.com/1003098/8163/i/450/depositphotos_81637954-stock-photo-pharmacy-interior.jpg') no-repeat center/cover;
-      background-size: cover;
-      color: #fff;
-      min-height: 50vh;
-      position: relative;
+      color: #888;
+      font-style: italic;
     }
-    .hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
-    .hero-content { position: relative; max-width: var(--max-width); margin: 0 1rem; }
-    .hero-content h2 { font-size: 2.5rem; margin-bottom: .5rem; }
-    .hero-content p { font-size: 1.1rem; }
-    #auth, #app { display: none; padding: 2rem 1rem; }
-    .form-card { max-width: 400px; width: 90%; margin: 0 auto; background: var(--card); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); }
-    .form-card h2 { text-align: center; margin-bottom: 1rem; color: var(--primary); }
-    .form-card input { width: 100%; padding: .75rem; margin-bottom: var(--spacing); border: 1px solid var(--border); border-radius: var(--radius); transition: border var(--speed); }
-    .form-card input:focus { border-color: var(--primary); outline: none; }
-    .form-card button { width: 100%; padding: .75rem; background: var(--accent); border: none; color: #fff; font-weight: 600; border-radius: var(--radius); cursor: pointer; transition: transform var(--speed); }
-    .form-card button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-    .container { width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 1rem; }
-    .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: var(--spacing); }
-    .tab { flex: 1; text-align: center; padding: var(--spacing); background: var(--primary); color: #fff; border-radius: var(--radius); cursor: pointer; transition: background var(--speed); font-size: 1rem; }
-    .tab.active, .tab:hover { background: var(--accent); }
-    .content-section { display: none; animation: fadeIn var(--speed) ease-in; padding: var(--spacing) 0; }
-    .content-section.active { display: block; }
-    .card { background: var(--card); padding: var(--spacing); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: var(--spacing); }
-    .card p, .card ul { margin-bottom: .5rem; }
-    .card ul { list-style: disc inside; }
-    .action, .paste-btn { display: inline-block; margin-top: var(--spacing); padding: .5rem 1rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; transition: transform var(--speed); font-size: 0.95rem; }
-    .action:hover, .paste-btn:hover { transform: translateY(-2px); }
-    #mapEmbed { width: 100%; height: 50vh; max-height: 400px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    textarea { width: 100%; padding: .75rem; border: 1px solid var(--border); border-radius: var(--radius); resize: vertical; font-size: 0.95rem; }
+
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1e3f0;
+      border-radius: var(--radius);
+      resize: vertical;
+      font-size: 0.95rem;
+      min-height: 120px;
+    }
+
     @media (max-width: 768px) {
-      header { flex-direction: column; align-items: flex-start; }
-      nav a { display: block; margin: .25rem 0; }
-      .hero { padding: 3rem 1rem; min-height: 40vh; }
+      .nav-container { flex-direction: column; align-items: flex-start; }
+      nav a { margin: 0.25rem 0 0; }
       .hero-content h2 { font-size: 2rem; }
-      .hero-content p { font-size: 1rem; }
       .tabs { flex-direction: column; }
     }
     @media (max-width: 480px) {
-      header { padding: var(--spacing); }
-      .form-card { padding: var(--spacing); }
+      .form-card { padding: 1rem; }
       textarea, .action, .paste-btn { font-size: 0.9rem; }
       #mapEmbed { height: 30vh; }
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
   </style>
 </head>
 <body>
   <header>
-    <h1><span class="pharma">Pharma</span><span class="go">GO</span></h1>
-    <nav>
-      <a href="#" id="link-login">Se connecter</a>
-      <a href="#" id="link-register">Créer un compte</a>
-    </nav>
+    <div class="nav-container">
+      <h1><span class="pharma">Pharma</span><span class="go">GO</span></h1>
+      <nav>
+        <a href="#" id="link-login">Se connecter</a>
+        <a href="#" id="link-register">Créer un compte</a>
+      </nav>
+    </div>
   </header>
 
   <section class="hero" id="hero-section">
@@ -154,10 +267,10 @@
       </div>
       <div id="pharmacie" class="content-section">
         <button class="action" id="locatePharmacy">Trouver une pharmacie proche</button>
-        <div id="mapEmbed"><p>En attente de géolocalisation...</p></div>
+        <div id="mapEmbed">En attente de géolocalisation...</div>
       </div>
       <div id="about" class="content-section">
-        <div class="card">Nous sommes Basma, Nada, Mehdi, Inès et Mohammed Reda, cinq lycéens passionnés et avides d’aventure, animés par l’esprit d’entreprenariat. Ensemble, nous croyons que la technologie peut simplifier le quotidien et créer des liens plus forts entre les personnes, même loin de chez elles. Chacun de nous apporte une compétence unique. Notre ambition ? Créer des solutions pratiques qui répondent à de vrais besoins, tout en apprenant et grandissant ensemble dans cette aventure entrepreneuriale.</div>
+        <div class="card">Nous sommes Basma, Nada, Méhdi, Inès et Mohammed Reda, cinq lycéens passionnés et avides d’aventure, animés par l’esprit d’entreprenariat. Ensemble, nous croyons que la technologie peut simplifier le quotidien et créer des liens plus forts entre les personnes, même loin de chez elles. Chacun de nous apporte une compétence unique. Notre ambition ? Créer des solutions pratiques qui répondent à de vrais besoins, tout en apprenant et grandissant ensemble dans cette aventure entrepreneuriale.</div>
       </div>
       <div id="logout" class="content-section">
         <button class="action" id="logoutBtn">Déconnexion</button>
@@ -166,9 +279,13 @@
   </section>
 
   <script>
+    // Sélection des sections
     const heroSection = document.getElementById('hero-section');
     const authSection = document.getElementById('auth');
     const appSection = document.getElementById('app');
+    const nav = document.querySelector('.nav-container nav');
+
+    // Liens et formulaires
     const linkLogin = document.getElementById('link-login');
     const linkRegister = document.getElementById('link-register');
     const formTitle = document.getElementById('form-title');
@@ -178,13 +295,32 @@
     const displayUsername = document.getElementById('displayUsername');
     let registerMode = false;
 
+    // Affiche l'écran d'authentification
     function showAuth() {
       heroSection.style.display = 'none';
       authSection.style.display = 'block';
+      appSection.style.display = 'none';
     }
-    linkLogin.addEventListener('click', e => { e.preventDefault(); registerMode = false; formTitle.textContent = 'Se connecter'; authButton.textContent = 'Se connecter'; confirmInput.style.display = 'none'; showAuth(); });
-    linkRegister.addEventListener('click', e => { e.preventDefault(); registerMode = true; formTitle.textContent = 'Créer un compte'; authButton.textContent = 'Créer un compte'; confirmInput.style.display = 'block'; showAuth(); });
 
+    linkLogin.addEventListener('click', e => {
+      e.preventDefault();
+      registerMode = false;
+      formTitle.textContent = 'Se connecter';
+      authButton.textContent = 'Se connecter';
+      confirmInput.style.display = 'none';
+      showAuth();
+    });
+
+    linkRegister.addEventListener('click', e => {
+      e.preventDefault();
+      registerMode = true;
+      formTitle.textContent = 'Créer un compte';
+      authButton.textContent = 'Créer un compte';
+      confirmInput.style.display = 'block';
+      showAuth();
+    });
+
+    // Gestion du formulaire d'authentification
     authForm.addEventListener('submit', e => {
       e.preventDefault();
       const user = document.getElementById('username').value.trim();
@@ -200,13 +336,16 @@
         const stored = JSON.parse(localStorage.getItem('user_' + user) || 'null');
         if (!stored || stored.password !== pass) return alert('Identifiants invalides.');
       }
+      // Passage à l'app
       displayUsername.textContent = user;
-      document.querySelector('header nav').style.display = 'none';
+      nav.style.display = 'none';
       authSection.style.display = 'none';
+      heroSection.style.display = 'none';
       appSection.style.display = 'block';
       initApp(user);
     });
 
+    // Initialisation de l'app
     function initApp(user) {
       setupTabs();
       loadProfile(user);
@@ -215,6 +354,7 @@
       setupLogout();
     }
 
+    // Onglets
     function setupTabs() {
       document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -224,11 +364,15 @@
       }));
     }
 
+    // Chargement des ordonnances
     function loadProfile(user) {
       const div = document.getElementById('profile');
       div.innerHTML = '';
       const list = JSON.parse(localStorage.getItem('ordonnances_' + user) || '[]');
-      if (!list.length) { div.innerHTML = '<p>Aucune ordonnance pour le moment.</p>'; return; }
+      if (!list.length) {
+        div.innerHTML = '<p>Aucune ordonnance pour le moment.</p>';
+        return;
+      }
       list.forEach((ord, i) => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -247,16 +391,22 @@
       }));
     }
 
+    // Décodage
     function setupDecode(user) {
       const pasteBtn = document.getElementById('pasteBtn');
       const hiddenCode = document.getElementById('hiddenCode');
       pasteBtn.addEventListener('click', async () => {
-        try { const text = await navigator.clipboard.readText(); hiddenCode.textContent = text.trim(); document.getElementById('codeInput').value = text.slice(0, 12); }
-        catch { alert('Impossible de coller'); }
+        try {
+          const text = await navigator.clipboard.readText();
+          hiddenCode.textContent = text.trim();
+          document.getElementById('codeInput').value = text.slice(0, 12);
+        } catch {
+          alert('Impossible de coller');
+        }
       });
       document.getElementById('decodeBtn').addEventListener('click', () => {
         const full = hiddenCode.textContent;
-        if (!full) return alert('Collez d abord un code');
+        if (!full) return alert('Collez d’abord un code');
         try {
           const obj = JSON.parse(atob(full.slice(12)));
           obj.date = new Date().toLocaleDateString('fr-FR');
@@ -265,16 +415,22 @@
           listArr.push(obj);
           localStorage.setItem('ordonnances_' + user, JSON.stringify(listArr));
           loadProfile(user);
-          document.getElementById('codeResult').innerHTML = `<div class="card"><h4>Ordonnance décodée</h4><ul>${obj.prescription.map(it => `<li>${it.medicament} - ${it.frequence}x/j</li>`).join('')}</ul></div>`;
-        } catch { alert('Code invalide'); }
+         200
+        } catch {
+          alert('Code invalide');
+        }
       });
     }
 
+    // Géolocalisation
     function setupMap() {
       document.getElementById('locatePharmacy').addEventListener('click', () => {
         const m = document.getElementById('mapEmbed');
         m.innerHTML = '<p>Chargement de la carte...</p>';
-        if (!navigator.geolocation) { m.innerHTML = '<p>Géolocalisation non supportée.</p>'; return; }
+        if (!navigator.geolocation) {
+          m.innerHTML = '<p>Géolocalisation non supportée.</p>';
+          return;
+        }
         navigator.geolocation.getCurrentPosition(pos => {
           const { latitude, longitude } = pos.coords;
           m.innerHTML = `<iframe src="https://maps.google.com/maps?q=pharmacie&ll=${latitude},${longitude}&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>`;
@@ -282,9 +438,10 @@
       });
     }
 
-    function setupLogout() { document.getElementById('logoutBtn').addEventListener('click', () => location.reload()); }
+    // Déconnexion
+    function setupLogout() {
+      document.getElementById('logoutBtn').addEventListener('click', () => location.reload());
+    }
   </script>
 </body>
 </html>
-
-
